@@ -1,21 +1,24 @@
 package ua.com.foxminded.charcounter;
 
+import java.util.LinkedHashMap;
 import java.util.Map;
-import java.util.Optional;
-import java.util.WeakHashMap;
 
-public class Cache<K, V> {
-    private final Map<K, V> cacheStorage;
-
+public class Cache<K, V> extends LinkedHashMap<K, V> {
+    private final int maxSize;
     public Cache() {
-        cacheStorage = new WeakHashMap<>();
+        super();
+        maxSize = 100;
     }
 
-    public Optional<V> read(K key) {
-        return Optional.ofNullable(cacheStorage.get(key));
+    public Cache(int maxSize) {
+        super();
+        if(maxSize <= 0)
+            throw new IllegalArgumentException();
+        this.maxSize = maxSize;
     }
 
-    public void save(K key, V value){
-        cacheStorage.put(key, value);
+    @Override
+    protected boolean removeEldestEntry(Map.Entry eldest) {
+        return size() > maxSize;
     }
 }
