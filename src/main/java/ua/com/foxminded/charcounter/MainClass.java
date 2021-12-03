@@ -2,8 +2,8 @@ package ua.com.foxminded.charcounter;
 
 public class MainClass {
     public static void main(String[] args) {
-        CharCounter charCounter = new CacheCharCounter();
-        System.out.println(charCounter.countChars("hello world!"));
+        CharCounter charCounter = new CacheCharCounter(new CaseInsensitiveCharCounter(new CharCounterImpl()));
+        System.out.println(charCounter.countChars("heLlo world!"));
 
         System.out.println(charCounter.countChars("hell world!"));
 
