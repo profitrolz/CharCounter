@@ -10,8 +10,6 @@ public class LettersCounter extends CharCounterDecorator {
 
     @Override
     public Map<Character, Integer> countChars(String string) {
-        StringBuilder str = new StringBuilder();
-        string.chars().mapToObj(ch -> (char) ch).filter(Character::isLetter).forEach(str::append);
-        return super.countChars(str.toString());
+        return super.countChars(string.replaceAll("[^a-zA-Z]", ""));
     }
 }
