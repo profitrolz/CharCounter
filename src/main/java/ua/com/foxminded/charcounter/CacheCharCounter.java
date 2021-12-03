@@ -4,10 +4,10 @@ import java.util.Map;
 import java.util.Optional;
 
 public class CacheCharCounter extends CharCounterDecorator {
-    private final Cache cache;
+    private final Cache<String, Map<Character, Integer>> cache;
     public CacheCharCounter(CharCounter charCounter) {
         super(charCounter);
-        this.cache = new Cache();
+        this.cache = new Cache<>();
     }
 
     @Override
