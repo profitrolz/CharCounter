@@ -15,6 +15,6 @@ public class CharCounterImpl implements CharCounter {
 
         return string.chars()
                 .mapToObj(character -> (char) character)
-                .collect(Collectors.toMap(character -> character, character -> 1, (oldValue, newValue) -> oldValue += newValue, LinkedHashMap::new));
+                .collect(Collectors.toMap(character -> character, character -> 1, Integer::sum, LinkedHashMap::new));
     }
 }
