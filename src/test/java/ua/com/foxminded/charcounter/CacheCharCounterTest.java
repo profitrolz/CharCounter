@@ -9,7 +9,7 @@ public class CacheCharCounterTest {
 
     @Test
     void countChars_ShouldReturnMapFromCache_TwoSameString() {
-        CharCounter charCounter = new CacheCharCounter(new CharCounterImpl());
+        CharCounter charCounter = new CacheCharCounter(new CharCounterImpl(), 100);
 
         String string = "hello world!";
         Map<Character, Integer> firstActual = charCounter.countChars(string);

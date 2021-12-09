@@ -17,10 +17,6 @@ public class LRUCache<K, V> implements Cache<K, V> {
         }
     };
 
-    public LRUCache(Function<K, V> cacheLoader) {
-        this(cacheLoader, DEFAULT_CACHE_SIZE);
-    }
-
     public LRUCache(Function<K, V> cacheLoader, int maxSize) {
         if(maxSize <= 0)
             throw new IllegalArgumentException("Cache size should be greater than 0");
@@ -38,6 +34,7 @@ public class LRUCache<K, V> implements Cache<K, V> {
         return Optional.ofNullable(cacheStorage.get(key));
     }
 
+    @Override
     public V readOrCompute(K key){
         return cacheStorage.computeIfAbsent(key, cacheLoader);
     }
