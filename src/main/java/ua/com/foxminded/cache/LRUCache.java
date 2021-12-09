@@ -6,16 +6,10 @@ import java.util.Optional;
 import java.util.function.Function;
 
 public class LRUCache<K, V> implements Cache<K, V> {
+    private static final int DEFAULT_CACHE_SIZE = 100;
 
-    private final int maxSize;
     private final Function<K, V> cacheLoader;
-    private final LinkedHashMap<K, V> cacheStorage = new LinkedHashMap<>() {
-
-        @Override
-        protected boolean removeEldestEntry(Map.Entry<K, V> eldest) {
-            return size() > maxSize;
-        }
-    };
+    private final LinkedHashMap<K, V> cacheStorage;
 
     public LRUCache(Function<K, V> cacheLoader) {
         this(cacheLoader, DEFAULT_CACHE_SIZE);
@@ -24,8 +18,14 @@ public class LRUCache<K, V> implements Cache<K, V> {
     public LRUCache(Function<K, V> cacheLoader, int maxSize) {
         if(maxSize <= 0)
             throw new IllegalArgumentException("Cache size should be greater than 0");
-        this.maxSize = maxSize;
         this.cacheLoader = cacheLoader;
+        cacheStorage  = new LinkedHashMap<>() {
+
+            @Override
+            protected boolean removeEldestEntry(Map.Entry<K, V> eldest) {
+                return size() > maxSize;
+            }
+        };
     }
 
     @Override
@@ -38,6 +38,7 @@ public class LRUCache<K, V> implements Cache<K, V> {
         return Optional.ofNullable(cacheStorage.get(key));
     }
 
+    @Override
     public V readOrCompute(K key){
         return cacheStorage.computeIfAbsent(key, cacheLoader);
     }
