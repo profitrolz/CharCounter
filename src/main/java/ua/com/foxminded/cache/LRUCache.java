@@ -11,10 +11,6 @@ public class LRUCache<K, V> implements Cache<K, V> {
     private final Function<K, V> cacheLoader;
     private final LinkedHashMap<K, V> cacheStorage;
 
-    public LRUCache(Function<K, V> cacheLoader) {
-        this(cacheLoader, DEFAULT_CACHE_SIZE);
-    }
-
     public LRUCache(Function<K, V> cacheLoader, int maxSize) {
         if(maxSize <= 0)
             throw new IllegalArgumentException("Cache size should be greater than 0");
