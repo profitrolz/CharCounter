@@ -9,7 +9,11 @@ public class LRUCache<K, V> implements Cache<K, V> {
     private static final int DEFAULT_CACHE_SIZE = 100;
 
     private final Function<K, V> cacheLoader;
-    private final LinkedHashMap<K, V> cacheStorage;
+    private final Map<K, V> cacheStorage;
+
+    public LRUCache(Function<K, V> cacheLoader) {
+        this(cacheLoader, DEFAULT_CACHE_SIZE);
+    }
 
     public LRUCache(Function<K, V> cacheLoader, int maxSize) {
         if(maxSize <= 0)
